@@ -1,11 +1,13 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import {useNavigate} from  "react-router-dom";
+import { useAuthContext } from "../Context/AuthContext";
 
 
 const useLogin = () => {
   const [isloading,setLoading] = useState();
   const navigate = useNavigate();
+  const {setAuthUser} = useAuthContext();
 
   const login = async({userName, password})=>{
     if(!userName || !password){
@@ -20,19 +22,24 @@ const useLogin = () => {
             body: JSON.stringify({userName, password})
         })
         const data = await res.status;
-        console.log(data);
+
         const response = await res.json();
+
         if(parseInt(data/100)== 2){
+            
+            //Local Storage
+            localStorage.setItem("chat-user", JSON.stringify(response));
+            // auth Context
+            setAuthUser(response);
+
             toast.success("Login successful");
-            navigate(`/home/${response.id}`, {replace: true});
+            navigate(`/home/${response.id}`);
         }else{
-            toast.error("Login Failed" + ", " +  response.error);
-            // navigate("/home");
+
+            throw new Error(response.error);
         }
-        console.log(response);
     } catch (error) {
-        // navigate("/home");
-        toast.error("Login Failed",error.message);
+        toast.error("Login Failed" + "," + error.message);
     }finally{
         setLoading(false);
     }
@@ -40,4 +47,4 @@ const useLogin = () => {
   return {isloading, login}
 }
 
-export default useLogin
+export default useLogin;

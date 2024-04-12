@@ -13,10 +13,12 @@ const app = express();
 
 
 dotenv.config();
-if (!process.env.DB_STRING) {
-    console.error("MongoDB URI not found in environment variables. Make sure it's defined in your .env file.");
-    process.exit(1); // Exit the process if MongoDB URI is not found
-}
+connectToMongoDb();
+// if (!process.env.DB_STRING) {
+//     console.error("MongoDB URI not found in environment variables. Make sure it's defined in your .env file.");
+//     process.exit(1); // Exit the process if MongoDB URI is not found
+// }
+
 
 
 app.use(express.json()); // to parse incoming json payload ( from req body)
@@ -38,6 +40,6 @@ app.get("/", (req, res) => {
 
 
 app.listen(8080, ()=>{
-    connectToMongoDb();
+    
     console.log("Server is running on port http://localhost:8080")
 });

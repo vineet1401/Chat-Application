@@ -1,18 +1,16 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {Toaster} from "react-hot-toast";
 import useLogin from "../../Hooks/useLogin";
-
+import { ThreeDots } from "react-loader-spinner";
 
 const Login = () => {
-
   const [inputs, setInputs] = useState({
     userName: "",
-    password: ""
+    password: "",
   });
 
-  const { login } = useLogin();
+  const { isloading, login } = useLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,8 +25,7 @@ const Login = () => {
           style={{
             backgroundImage: `url(https://img.freepik.com/free-vector/cloud-computing-security-abstract-concept-illustration_335657-2105.jpg?w=740)`,
           }}
-        >
-        </div>
+        ></div>
         <div className="flex-1 lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div className=" flex flex-col items-center">
             <div className="text-center">
@@ -66,19 +63,34 @@ const Login = () => {
                     onClick={handleSubmit}
                     className="mt-5 tracking-wide font-semibold bg-blue-900 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
                   >
-                    <svg
-                      className="w-6 h-6 -ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                      <circle cx="8.5" cy="7" r="4" />
-                      <path d="M20 8v6M23 11h-6" />
-                    </svg>
-                    <span className="ml-3">Login</span>
+                    {isloading ? (
+                      <ThreeDots
+                        visible={true}
+                        height="40"
+                        width="40"
+                        color="#ffffff"
+                        radius="9"
+                        ariaLabel="three-dots-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                      />
+                    ) : (
+                      <>
+                        <svg
+                          className="w-6 h-6 -ml-2"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                          <circle cx="8.5" cy="7" r="4" />
+                          <path d="M20 8v6M23 11h-6" />
+                        </svg>
+                        <span className="ml-3">Login</span>
+                      </>
+                    )}
                   </button>
                   <p className="mt-6 text-s text-gray-600 text-center">
                     {/* eslint-disable-next-line react/no-unescaped-entities */}
@@ -91,7 +103,6 @@ const Login = () => {
                   </p>
                 </div>
               </form>
-              <div><Toaster/></div> 
             </div>
           </div>
         </div>

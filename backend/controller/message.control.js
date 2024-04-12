@@ -7,7 +7,6 @@ export const sendMessage = async( req, res) => {
         const {message} = req.body;
         const {id : receiverId} = req.params;
         const senderId = req.user._id;
-        console.log(message,  ",", receiverId, ",", senderId);
 
         let conversation = await ConversationModel.findOne({participant : {$all : [senderId , receiverId]}});
         if(!conversation){
@@ -25,12 +24,11 @@ export const sendMessage = async( req, res) => {
 
         //Socket Io Functionality
 
-        await Promise.all(conversation.save(), newMessage.save());
+        await Promise.all([conversation.save(), newMessage.save()]);
 
         return res.status(200).json(newMessage);
 
     }catch(error){
-        console.log(error);
         return res.status(500).json({error: error});
     }
 }
@@ -38,22 +36,20 @@ export const sendMessage = async( req, res) => {
 
 export const getMessage = async(req, res) =>{
     try {
-        const {id:userToChatId} = req.params;
+        const userToChatId = req.params.id;
         const senderId = req.user._id;
+        // console.log(senderId + " , " +  userToChatId);
 
         const conversation = await ConversationModel.findOne({
             participant : {$all : [senderId, userToChatId]}
         }).populate("messages");
 
-        
-        if(!conversation) return res.status(200).json([]);
-
         const messages = conversation.messages;
+        console.log(messages);
 
-
-        res.status(200).json(conversation.messages);
+        console.log(messages.length)
+        return res.status(200).send(messages);
     } catch (error) {
-        console.log(`Error in getMessage Controller ${error.message}`);
         return res.status(500).json({error: error.message});
     }
 }

@@ -8,16 +8,15 @@ const authLogin = async(req, res) => {
         const {userName, password} = req.body;
         const user = await UserModel.findOne({userName});
         if(!user) {
-            console.error("User not found");
             return res.status(400).json({error : "No user found"});
         }
+
         const isPassCorrect = await bcrypt.compare(password, user.password);
         if(!isPassCorrect) {
-            console.error("Password incorrect");
             return res.status(400).json({error : "Invalid username or password"});
         }
-        generateTokenAndSetCookie(user._id, res);
 
+        generateTokenAndSetCookie(user._id, res);
 
         return res.status(201).json({
             id : user._id,
@@ -26,9 +25,10 @@ const authLogin = async(req, res) => {
             profilePic : user.profilePic
         });
 
+        
+
     } catch (error) {
-        console.error("Server error");
-        return res.status(500).json({ error: error });
+        return res.status(500).json({ error: "Server Error" });
     }
     
 }

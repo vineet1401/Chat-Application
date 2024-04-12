@@ -1,10 +1,15 @@
-export default function Example() {
+import { useAuthContext } from "../../Context/AuthContext";
+
+export default function StarterChat() {
+
+  const {authUser}  = useAuthContext();
+  
   return (
     <>
       <main className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div className="text-center">
           <h1 className="my-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-7xl">
-            Hello, Vineet
+            Hello, {authUser.fullName}
           </h1>
             <p className="font-semibold text-2xl text-indigo-600">
               Select a chat to start messaging
