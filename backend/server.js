@@ -10,7 +10,6 @@ import userRouter  from "./routes/user.routes.js";
 import connectToMongoDb from "./database/dbConnection.js";
 import {app, server} from "./sockets/socket.js"
 
-const __dirName = path.resolve();
 
 
 dotenv.config();
@@ -27,11 +26,11 @@ app.use("/api/message", messageRouter);
 app.use("/api/user", userRouter);
 
 
-app.use(express.static(path.join(__dirName, "/frontend/dist")))
+app.use(express.static(path.join(__dirname, "/frontend/dist")))
 
 
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirName, "frontend", "dist", "index.html"));
+    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 })
 
 
