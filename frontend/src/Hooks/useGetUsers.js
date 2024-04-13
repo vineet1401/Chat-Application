@@ -21,9 +21,9 @@ const useGetUsers = () => {
     };
 
     getUser();
-  }, [setUserList])
+  }, [])
 
-  return {userList, setUserList};
+  return {userList};
 
 }
 

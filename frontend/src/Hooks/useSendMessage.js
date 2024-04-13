@@ -15,7 +15,9 @@ const useSendMessage = () => {
             if(data.error){
                 toast.error("Error sending message");
             }
+            
             setUserChats([...userChats, data]);
+            
         }catch(error){
             toast.error(error.message);
         }

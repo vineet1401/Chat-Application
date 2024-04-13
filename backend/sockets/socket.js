@@ -11,28 +11,28 @@ const io = new Server(server, {
         methods : [ 'GET', 'POST']
     }
 });
+const userSocketMap = {};
 
 export const getRecieverSocketId = (receiverId) => {
     return userSocketMap[receiverId];
 }
 
-const userSocketMap = {};
 
 io.on('connection', (socket)=> {
-    console.log("user Connected", socket.id);
-
-    const userId = socket.handshake.query.userId;
+    // console.log("user Connected", socket.id);
+    
+    const userId = socket.handshake.query.id;
     if(userId != "undefined") userSocketMap[userId] = socket.id;
 
     io.emit("getOnlineUser", Object.keys(userSocketMap));
     
     socket.on("disconnect", ()=>{
-        console.log("user Disconnected", socket.id);
+        // console.log("user Disconnected", socket.id);
         delete userSocketMap[userId];
         
         io.emit("getOnlineUser", Object.keys(userSocketMap));
 
-    })
-})
+    });
+});
 
 export {app, io, server};

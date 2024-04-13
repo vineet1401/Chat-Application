@@ -69,16 +69,20 @@ const authSignup = async(req, res) => {
             profilePic : gender == "male" ? boyProfilePic : girlProfilePic
         });
 
-        generateTokenAndSetCookie(newUser._id, res);
+        if(newUser){
+            generateTokenAndSetCookie(newUser._id, res);
 
-        await newUser.save();
-
-        return res.status(201).json({
-            id : newUser._id,
-            fullName: newUser.fullName,
-            userName : newUser.userName,
-            profilePic : newUser.profilePic
-        });
+            await newUser.save();
+    
+            return res.status(201).json({
+                id : newUser._id,
+                fullName: newUser.fullName,
+                userName : newUser.userName,
+                profilePic : newUser.profilePic
+            });
+        }else{
+            res.status(400).json({ error: "Invalid user data" });
+        }
 
     } catch (error) {
        return  res.status(500).json({error : error.message});

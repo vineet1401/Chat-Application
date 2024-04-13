@@ -15,11 +15,12 @@ const convertTime = (time) => {
 };
 
 const ChatSection = () => {
+  useListenMessage(); 
+  
   const { selectedUser, authUser } = useAuthContext();
   const recieverId = selectedUser._id;
   const [textMessage, setTextMessage] = useState("");
 
-  useListenMessage(); 
 
   const { sendMessage } = useSendMessage();
   const { userChats } = useGetMessages();

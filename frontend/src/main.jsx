@@ -6,6 +6,24 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthContextProvider } from "./Context/AuthContext.jsx";
 import { SocketContextProvider } from "./Context/SocketContext.jsx";
 
+// window.onbeforeunload = function() {
+//   localStorage.removeItem("chat-user");
+//   return '';
+// };
+function clearStorage() {
+
+  let session = sessionStorage.getItem('register');
+
+  if (session == null) {
+  
+      localStorage.removeItem('remove');
+
+  }
+  sessionStorage.setItem('register', 1);
+}
+window.addEventListener('load', clearStorage);
+
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthContextProvider>

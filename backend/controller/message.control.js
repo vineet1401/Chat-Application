@@ -25,13 +25,16 @@ export const sendMessage = async( req, res) => {
         await Promise.all([conversation.save(), newMessage.save()]);
 
         //Socket Io Functionality
-        const receiverSocketId = getRecieverSocketId(receiverId )
-        if(receiverSocketId){
-            io.to(receiverSocketId).emit("newMessage", newMessage);
-        }
+        // const receiverSocketId = getRecieverSocketId(receiverId )
+        // console.log(receiverSocketId)
+        // if(receiverSocketId){
+            
+        // }
+        io.emit("newMessage", newMessage);
 
 
-        return res.status(200).json(newMessage);
+
+        return res.status(201).json(newMessage);
 
     }catch(error){
         return res.status(500).json({error: error});

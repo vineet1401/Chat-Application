@@ -28,7 +28,7 @@ const Home = () => {
         ) : (
           <>
             <Navbar></Navbar>
-            <div className="drawer h-[90vh] lg:drawer-open">
+            <div className="drawer h-[90vh] sm:drawer-open">
               <input
                 id="my-drawer-2"
                 type="checkbox"

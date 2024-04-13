@@ -34,7 +34,7 @@ const useSignup = () => {
             }
 
             // Local Storage
-            localStorage.setItem("chat-user", JSON.stringify(data));
+            localStorage.setItem("chat-user", JSON.stringify({...data, expiry:8*60*60*1000}));
 
             // Context 
             setAuthUser(data);

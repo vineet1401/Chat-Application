@@ -29,14 +29,14 @@ export const SocketContextProvider = ({ children }) => {
         setOnlineUser(user);
       })
 
-      return () => socket.close();
+      // return () => socket.close();
     } else {
       if (socket) {
         socket.close();
         setSocket(null);
       }
     }
-  }, [authUser, socket]);
+  }, [authUser]);
 
   return (
     <SocketContext.Provider value={{ socket, onlineUser }}>

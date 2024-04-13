@@ -28,7 +28,7 @@ const useLogin = () => {
         if(parseInt(data/100)== 2){
             
             //Local Storage
-            localStorage.setItem("chat-user", JSON.stringify(response));
+            localStorage.setItem("chat-user", JSON.stringify({...response, expiry:8*60*60*1000}));
             // auth Context
             setAuthUser(response);
 
