@@ -1,5 +1,5 @@
 import Lottie from 'react-lottie';
-import Messenger from "../../lottie/Messenger.json";
+import Messenger from "../../assets/lottie/Messenger.json";
 
 export default function Loading() {
     const defaultOptions = {
