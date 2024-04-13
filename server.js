@@ -1,28 +1,26 @@
-import express from "express";
 import connectToMongoDb from "./backend/database/dbConnection.js";
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
-
+import express from "express";
+import path from "path";
 
 import authRouter from "./backend/routes/auth.routes.js";
 import messageRouter  from "./backend/routes/message.routes.js";
 import userRouter  from "./backend/routes/user.routes.js";
+import {app, server} from "./backend/sockets/socket.js"
 
-
-const app = express();
+const __dirName = path.resolve();
 
 
 dotenv.config();
 connectToMongoDb();
-// if (!process.env.DB_STRING) {
-//     console.error("MongoDB URI not found in environment variables. Make sure it's defined in your .env file.");
-//     process.exit(1); // Exit the process if MongoDB URI is not found
-// }
-
 
 
 app.use(express.json()); // to parse incoming json payload ( from req body)
 app.use(cookieParser());
+app.use(express.static(path.join(__dirName, "/frontend/dist")))
+
+
 
 app.use("/api/auth", authRouter);
 app.use("/api/message", messageRouter);
@@ -31,15 +29,13 @@ app.use("/api/user", userRouter);
 
 
 
-app.get("/", (req, res) => {
-    console.log("home executed")
-    res.send("Welcome");
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirName, "frontend", "dist", "index.html"));
 })
 
 
 
 
-app.listen(8080, ()=>{
-    
+server.listen(8080, ()=>{
     console.log("Server is running on port http://localhost:8080")
 });

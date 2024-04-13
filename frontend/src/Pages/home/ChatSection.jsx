@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuthContext } from "../../Context/AuthContext.jsx";
 import useSendMessage from "../../Hooks/useSendMessage.js";
 import useGetMessages from "../../Hooks/useGetMessages.js";
+import useListenMessage from "../../Hooks/useListenMessage.js";
 
 const convertTime = (time) => {
   const date = new Date(time);
@@ -18,6 +19,8 @@ const ChatSection = () => {
   const recieverId = selectedUser._id;
   const [textMessage, setTextMessage] = useState("");
 
+  useListenMessage(); 
+
   const { sendMessage } = useSendMessage();
   const { userChats } = useGetMessages();
 
@@ -31,6 +34,14 @@ const ChatSection = () => {
     event.preventDefault();
     return setTextMessage(event.target.value);
   }, []);
+
+  const lastMessage = useRef();
+
+  useEffect(()=> {
+    setTimeout(() => {
+      lastMessage.current?.scrollIntoView({ behaviour : "smooth"})
+    }, 200);
+  }, [userChats])
 
   return (
     <>
@@ -56,10 +67,9 @@ const ChatSection = () => {
             </>
           ) : (
             userChats.map((message) => {
-              // {console.log(message.recieverId != recieverId)}
               return message.receiverId !== selectedUser._id ? (
                 <>
-                  <div key={message._id} className="chat h-fit chat-end">
+                  <div key={message._id} ref={lastMessage} className="chat h-fit chat-end">
                     <div className="chat-image avatar">
                       <div className="w-10 rounded-full">
                         <img
@@ -82,7 +92,7 @@ const ChatSection = () => {
                 </>
               ) : (
                 <>
-                  <div key={message._id} className="chat h-fit chat-start">
+                  <div key={message._id} ref={lastMessage} className="chat h-fit chat-start">
                     <div className="chat-image avatar">
                       <div className="w-10 rounded-full">
                         <img

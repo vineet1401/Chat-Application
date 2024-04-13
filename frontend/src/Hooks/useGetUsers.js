@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useAuthContext } from '../Context/AuthContext';
-import toast from "react"
+import toast from "react-hot-toast"
 
 const useGetUsers = () => {
   const {userList,setUserList} = useAuthContext();
@@ -23,7 +23,7 @@ const useGetUsers = () => {
     getUser();
   }, [setUserList])
 
-  return {userList};
+  return {userList, setUserList};
 
 }
 
