@@ -41,7 +41,7 @@ const useSignup = () => {
 
 
             toast.success("Success")
-            navigate(`/home/${response.id}`);
+            navigate(`/home/${data.id}`);
         } catch (error) {
             toast.error("Failed to Sign Up", error)
         }finally{
