@@ -19,6 +19,8 @@ connectToMongoDb();
 app.use(express.json()); // to parse incoming json payload ( from req body)
 app.use(cookieParser());
 
+const __dirname = path.resolve()
+
 
 
 app.use("/api/auth", authRouter);
