@@ -30,7 +30,7 @@ const Login = () => {
           <div className=" flex flex-col items-center">
             <div className="text-center">
               <h1 className="text-2xl xl:text-4xl font-extrabold text-blue-900">
-                Login to ChatApp
+                Login to Chat Waves
               </h1>
               <p className="text-[12px] mt-4 text-gray-500">
                 Hey enter your details to login your account
